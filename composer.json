@@ -1,0 +1,52 @@
+{
+  "name": "emmanuelmensah/laravel-mcp-suite",
+  "description": "Firebase-style MCP capability suite for Laravel applications.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "laravel",
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "assistant"
+  ],
+  "authors": [
+    {
+      "name": "Emmanuel Mensah"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "laravel/framework": "^13.0",
+    "laravel/mcp": "^0.6.5"
+  },
+  "suggest": {
+    "laravel/passport": "Required only when using the passport_oauth web auth mode."
+  },
+  "require-dev": {
+    "orchestra/testbench": "^11.0",
+    "phpunit/phpunit": "^11.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "LaravelMcpSuite\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LaravelMcpSuite\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "LaravelMcpSuite\\LaravelMcpSuiteServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  }
+}
