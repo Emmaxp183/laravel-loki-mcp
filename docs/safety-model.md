@@ -1,21 +1,21 @@
 # Safety Model
 
-`Laravel MCP Suite` is designed as a read-first MCP layer, not a remote shell. The defaults are intentionally restrictive.
+`Laravel MCP Suite` is designed to inspect Laravel apps safely. It is read-first, and the default settings are intentionally restrictive.
 
 ## Default Posture
 
-The package starts with these defaults:
+Default behavior:
 
 - read tools are enabled in supported environments
 - write-capable tools are enabled automatically only in `local`
-- source-file editing is disabled until explicitly enabled
+- source-file editing is enabled by default in `local`
 - HTTP transport is disabled by default
 - shared-token auth is the default HTTP auth mode
 - non-allowlisted Artisan commands are rejected
 
 ## Environment Rules
 
-The built-in environment policy treats environments differently:
+The built-in environment policy changes behavior by environment:
 
 - `local`: read tools enabled, write tools can be enabled
 - `testing`: read tools enabled, write tools disabled by default
@@ -31,11 +31,11 @@ The two write toggles are:
 ],
 ```
 
-This affects generator-style tools, safe Artisan execution, and file-edit tools.
+These settings affect generator-style tools, safe Artisan execution, and file editing.
 
 ## HTTP Transport Safety
 
-The suite does not expose an HTTP MCP endpoint until you enable it:
+The package does not expose an HTTP MCP endpoint until you enable it:
 
 ```php
 'server' => [
@@ -43,7 +43,7 @@ The suite does not expose an HTTP MCP endpoint until you enable it:
 ],
 ```
 
-When enabled, the default auth mode is `shared_token`. That means the request must include one of:
+When enabled, the default auth mode is `shared_token`. Requests must include one of:
 
 - `Authorization: Bearer <token>`
 - `X-MCP-Token: <token>` or whatever header you configure
@@ -80,11 +80,11 @@ The safe command runner only allows commands in:
 ],
 ```
 
-That means commands such as `migrate`, `db:wipe`, or arbitrary custom commands are not runnable unless you deliberately add them.
+Commands such as `migrate`, `db:wipe`, or arbitrary custom commands are not runnable unless you add them yourself.
 
 ## Source File Editing
 
-The file-edit surface is split into two categories:
+The file tools are split into two groups:
 
 Read-oriented:
 
@@ -101,7 +101,7 @@ Write-oriented file tools require both:
 - a write-enabled environment
 - `laravel-mcp.file_tools.allow_code_edits = true`
 
-Example opt-in:
+Current default:
 
 ```php
 'file_tools' => [
@@ -109,9 +109,11 @@ Example opt-in:
 ],
 ```
 
+If you want read-only behavior even in `local`, set that flag to `false`.
+
 ## File Path Restrictions
 
-Even with file editing enabled, the path policy still limits what can be touched.
+Even with file editing enabled, the path policy still limits what can be changed.
 
 Default writable roots:
 

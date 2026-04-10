@@ -1,19 +1,18 @@
-# Codex CLI Setup
+# Use With Codex CLI
 
-This guide covers the two supported deployment shapes:
+This is the simplest way to connect Codex CLI to your Laravel app.
 
-- local stdio MCP, which is the default and recommended starting point
-- optional remote HTTP MCP, when you deliberately expose `/mcp/app`
+Start with local MCP first. Only move to HTTP if you really need a remote endpoint.
 
 ## Local MCP Setup
 
-After running:
+After you run:
 
 ```bash
 php artisan mcp:install
 ```
 
-add the generated server entry to your Codex CLI MCP configuration:
+add this server entry to your Codex CLI MCP configuration:
 
 ```json
 {
@@ -26,15 +25,15 @@ add the generated server entry to your Codex CLI MCP configuration:
 }
 ```
 
-Important assumptions:
+This assumes:
 
 - the command runs from the Laravel project root
 - the MCP handle is still `app`
 - `routes/ai.php` is present
 
-## What Codex CLI Will See
+## What Codex CLI Can Access
 
-With the default module set, Codex CLI can discover tools such as:
+With the default modules enabled, Codex CLI can discover tools such as:
 
 - `laravel-app-info`
 - `laravel-routes-list`
@@ -60,26 +59,26 @@ It can also discover resources such as:
 - `laravel://app/errors/recent`
 - `laravel://docs/project-conventions`
 
-And prompt helpers such as:
+Prompt helpers include:
 
 - `debug-last-exception`
 - `generate-feature-test`
 - `review-route-controller-consistency`
 - `scaffold-crud`
 
-## Local Smoke Test
+## Quick Check
 
-If you want to verify the Laravel side before involving Codex CLI:
+To verify the Laravel side before involving Codex CLI:
 
 ```bash
 php artisan mcp:start app
 ```
 
-That confirms the local MCP handle is registered and can boot.
+If that boots cleanly, the local MCP server is registered.
 
-## Remote HTTP Mode
+## Optional HTTP Mode
 
-Codex CLI can also talk to the suite over HTTP if your client configuration supports MCP over HTTP. The Laravel-side setup is:
+If your Codex CLI setup supports MCP over HTTP, the Laravel-side setup is:
 
 1. Set `laravel-mcp.server.enable_web_server` to `true`
 2. Set `LARAVEL_MCP_SHARED_TOKEN`
@@ -91,9 +90,9 @@ Required request auth:
 - `Authorization: Bearer <token>`
 - or the configured shared-token header
 
-This package documents the Laravel-side requirements; use the Codex CLI MCP HTTP server format appropriate to your installed client version.
+This package only documents the Laravel-side setup. Use the Codex CLI HTTP MCP format that matches your installed version.
 
-## Passport OAuth Mode
+## Optional Passport OAuth
 
 If you need OAuth metadata routes for a desktop flow:
 
@@ -104,9 +103,9 @@ If you need OAuth metadata routes for a desktop flow:
 
 The suite only registers OAuth metadata routes when Passport is installed.
 
-## File Editing With Codex CLI
+## File Editing
 
-Codex CLI can use the file tools, but writes remain denied until you explicitly opt in:
+In the current default config, patch and write are already enabled in `local`:
 
 ```php
 'file_tools' => [
@@ -114,7 +113,9 @@ Codex CLI can use the file tools, but writes remain denied until you explicitly 
 ],
 ```
 
-Even after that, writes stay restricted to approved Laravel source directories and blocked paths like `.env` remain inaccessible.
+Outside `local`, or if you turn that flag off, writes are denied.
+
+Even when writes are allowed, they are still restricted to approved Laravel source directories and blocked paths like `.env`.
 
 ## Troubleshooting
 
@@ -127,5 +128,6 @@ If Codex CLI cannot start the server:
 If tools are visible but file writes are denied:
 
 - verify the app environment is `local`
+- verify `write_tools.enabled_in_local` is `true`
 - verify `file_tools.allow_code_edits` is `true`
 - verify the target path is inside an approved writable root

@@ -1,16 +1,18 @@
-# Claude Code Setup
+# Use With Claude Code
 
-This package is optimized to start with local stdio MCP. Claude Code should treat the Laravel app as a local MCP server first, then move to HTTP only when you intentionally expose it.
+This is the simplest way to connect Claude Code to your Laravel app.
+
+Start with local MCP first. Only move to HTTP if you want a remote endpoint.
 
 ## Local MCP Setup
 
-After:
+After you run:
 
 ```bash
 php artisan mcp:install
 ```
 
-use the generated local command pattern in your Claude Code MCP configuration:
+use this server entry in your Claude Code MCP configuration:
 
 ```json
 {
@@ -28,9 +30,9 @@ This assumes:
 - the command runs from the Laravel project root
 - the local MCP handle remains `app`
 
-## Recommended Starting Workflow
+## Recommended Setup Order
 
-For Claude Code, the cleanest initial setup is:
+The easiest order is:
 
 1. install the package
 2. run `php artisan mcp:install`
@@ -38,9 +40,9 @@ For Claude Code, the cleanest initial setup is:
 4. verify Claude Code can see the Laravel tool and resource inventory
 5. only then consider enabling HTTP transport or code editing
 
-That keeps the first integration step simple and avoids debugging transport, auth, and policy changes all at once.
+That keeps the first setup simple.
 
-## Available MCP Surface
+## What Claude Code Can Access
 
 With default modules enabled, Claude Code can discover:
 
@@ -83,9 +85,9 @@ Prompts:
 - `review-route-controller-consistency`
 - `scaffold-crud`
 
-## Optional Remote HTTP Mode
+## Optional HTTP Mode
 
-If you later want Claude Code to talk to a remote Laravel app instead of starting it locally, enable the Laravel-side HTTP server first:
+If you want Claude Code to talk to a remote Laravel app instead of starting it locally, enable the Laravel-side HTTP server first:
 
 1. set `laravel-mcp.server.enable_web_server` to `true`
 2. set `LARAVEL_MCP_SHARED_TOKEN`
@@ -97,9 +99,9 @@ Requests must send:
 - `Authorization: Bearer <token>`
 - or the configured shared-token header
 
-This documentation covers the Laravel-side setup. Use the HTTP MCP configuration format required by the Claude Code version you are running.
+This guide covers the Laravel-side setup. Use the HTTP MCP configuration format required by your Claude Code version.
 
-## Optional Passport OAuth Mode
+## Optional Passport OAuth
 
 If your Claude Code setup needs OAuth discovery metadata:
 
@@ -110,9 +112,9 @@ If your Claude Code setup needs OAuth discovery metadata:
 
 Without Passport installed, the suite will not register OAuth metadata routes.
 
-## File Editing With Claude Code
+## File Editing
 
-Claude Code can use the generic Laravel file tools, but patch and write actions remain blocked until you explicitly enable them:
+In the current default config, patch and write are already enabled in `local`:
 
 ```php
 'file_tools' => [
@@ -120,7 +122,9 @@ Claude Code can use the generic Laravel file tools, but patch and write actions 
 ],
 ```
 
-Even with that enabled:
+Outside `local`, or if you set that flag to `false`, patch and write are denied.
+
+Even when writes are allowed:
 
 - writes still depend on a write-enabled environment
 - blocked paths like `.env` remain denied
@@ -139,3 +143,10 @@ If remote mode fails:
 - verify `enable_web_server` is `true`
 - verify the app is serving `/mcp/app`
 - verify the auth token is actually being sent
+
+If file writes are denied:
+
+- verify the app environment is `local`
+- verify `write_tools.enabled_in_local` is `true`
+- verify `file_tools.allow_code_edits` is `true`
+- verify the target path is inside an approved writable root

@@ -1,63 +1,81 @@
 # Laravel MCP Suite
 
-`Laravel MCP Suite` is a package-first capability suite built on top of [`laravel/mcp`](https://github.com/laravel/mcp). It gives MCP clients a safe, structured way to inspect a Laravel application through tools, resources, and prompts.
+`Laravel MCP Suite` adds a Laravel-focused MCP server to your app.
 
-## What It Exposes
+It is built on top of [`laravel/mcp`](https://github.com/laravel/mcp) and gives MCP clients a safe way to inspect your Laravel project, run a small allowlisted set of actions, and read or edit approved files.
 
-- Tools for app info, routes, schema, logs, models, config, tests, and safe Artisan actions
-- Tools for approved source file listing, reading, patching, and writing
+GitHub repository: [Emmaxp183/laravel-loki-mcp](https://github.com/Emmaxp183/laravel-loki-mcp)
+
+## What You Get
+
+- Laravel tools for app info, routes, models, schema, logs, config, tests, and safe Artisan commands
+- File tools for listing, reading, patching, and writing approved project files
 - Resources for routes, models, schema, recent errors, and project conventions
-- Prompts for debugging, CRUD scaffolding, feature test generation, and route-controller review
+- Prompt helpers for debugging, CRUD scaffolding, feature tests, and route/controller review
 
-## Install
+## Quick Start
 
 ```bash
 composer require emmanuelmensah/laravel-mcp-suite
 php artisan mcp:install
 ```
 
-The install command creates:
+That command adds the MCP setup files your app needs:
 
 - `config/laravel-mcp.php`
 - `config/mcp.php`
 - `routes/ai.php`
 - `docs/project-conventions.md`
 
-It also prints ready-to-use `Codex CLI` and `Claude Code` client snippets plus a web-mode quick start.
+It also prints ready-to-use client snippets for `Codex CLI` and `Claude Code`.
 
-## Safety Defaults
+## How It Starts
 
-- Read tools are enabled by default.
-- Write-capable tools are enabled automatically only in `local`.
-- Source-file editing stays off until `laravel-mcp.file_tools.allow_code_edits` is enabled.
-- HTTP transport is disabled by default.
-- When HTTP transport is enabled, the default remote auth mode is a shared token.
-- Safe Artisan execution is allowlist-only.
-- Tool output is sanitized before it is returned.
+The package starts in local stdio mode.
+
+The default local MCP command is:
+
+```bash
+php artisan mcp:start app
+```
+
+Most clients will run that for you.
+
+## Safe By Default
+
+- Read tools are on by default.
+- Write-capable tools only work automatically in `local`.
+- File editing is on by default in `local`.
+- HTTP mode is off by default.
+- HTTP mode uses shared-token auth by default.
+- Artisan access is allowlist-only.
+- Tool output is sanitized.
 - Tool calls are audit logged.
 
 ## Web Transport
 
-The package starts with local stdio MCP as the default. If you need a protected HTTP endpoint:
+If you need a protected HTTP endpoint:
 
 1. Set `laravel-mcp.server.enable_web_server` to `true`
 2. Set `LARAVEL_MCP_SHARED_TOKEN`
 3. Keep `laravel-mcp.server.auth.mode` as `shared_token`
 
-The generated route registrar will expose the MCP HTTP endpoint and require either `Authorization: Bearer <token>` or the configured shared-token header.
+The default HTTP endpoint is `/mcp/app`.
+
+Requests must send either `Authorization: Bearer <token>` or the configured shared-token header.
 
 If you want OAuth metadata for desktop clients, install Laravel Passport, switch `laravel-mcp.server.auth.mode` to `passport_oauth`, and review `config/mcp.php`.
 
 ## Source File Editing
 
-The suite now exposes generic file tools for any connected client:
+The package exposes these file tools:
 
 - `laravel-files-list`
 - `laravel-files-read`
 - `laravel-files-patch`
 - `laravel-files-write`
 
-Write operations remain denied until you set:
+In the current default config, patch and write are enabled in `local` because:
 
 ```php
 'file_tools' => [
@@ -65,12 +83,14 @@ Write operations remain denied until you set:
 ],
 ```
 
-Even then, writes are still restricted to approved directories such as `app/`, `routes/`, `database/`, `config/`, and `tests/`.
+Outside `local`, or if you set that flag to `false`, write requests are denied.
+
+Even when writes are allowed, they are still limited to approved directories such as `app/`, `routes/`, `database/`, `config/`, and `tests/`.
 
 ## Documentation
 
 - [Installation](docs/installation.md)
 - [Safety Model](docs/safety-model.md)
-- [Codex CLI Setup](docs/clients/codex-cli.md)
-- [Claude Code Setup](docs/clients/claude-code.md)
+- [Use With Codex CLI](docs/clients/codex-cli.md)
+- [Use With Claude Code](docs/clients/claude-code.md)
 - [Extending The Package](docs/extending.md)

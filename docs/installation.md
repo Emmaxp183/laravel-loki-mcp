@@ -1,5 +1,7 @@
 # Installation
 
+This guide shows the shortest path to a working Laravel MCP server.
+
 ## Requirements
 
 - PHP `8.3+`
@@ -7,7 +9,7 @@
 - Composer `2.2+`
 - A Laravel application where `php artisan` works normally
 
-## Install The Package
+## 1. Install The Package
 
 ```bash
 composer require emmanuelmensah/laravel-mcp-suite
@@ -16,28 +18,36 @@ php artisan mcp:install
 
 The package auto-discovers its service provider through Composer, so no manual provider registration is required in a normal Laravel application.
 
-## What `mcp:install` Creates
+## 2. See What `mcp:install` Creates
 
 `php artisan mcp:install` is intentionally conservative. It only creates files that do not already exist.
 
-Generated or published files:
+Files created or published:
 
 - `config/laravel-mcp.php`
 - `config/mcp.php`
 - `routes/ai.php`
 - `docs/project-conventions.md`
 
-Console output:
+It also prints:
 
 - a `Codex CLI` local MCP snippet
 - a `Claude Code` local MCP snippet
 - a short web-mode checklist
 
-## Generated Route Registration
+## 3. Understand The Default Setup
 
 The generated `routes/ai.php` file delegates route setup to `LaravelMcpSuite\Support\AiRouteRegistrar`.
 
-That registrar always registers the local stdio MCP handle and only registers the HTTP endpoint when:
+By default:
+
+- the local MCP handle is `app`
+- the local command is `php artisan mcp:start app`
+- the HTTP endpoint is off
+- write-capable tools only work automatically in `local`
+- file editing is enabled by default in `local`
+
+The HTTP endpoint is only registered when:
 
 ```php
 'server' => [
@@ -45,9 +55,7 @@ That registrar always registers the local stdio MCP handle and only registers th
 ],
 ```
 
-## Default Configuration Shape
-
-The important top-level sections in `config/laravel-mcp.php` are:
+Main sections in `config/laravel-mcp.php`:
 
 - `server`
 - `modules`
@@ -56,33 +64,15 @@ The important top-level sections in `config/laravel-mcp.php` are:
 - `file_tools`
 - `redaction`
 
-The most important defaults are:
+## 4. Verify Local MCP Works
 
-- local MCP handle: `app`
-- web MCP path: `/mcp/app`
-- web transport: disabled
-- write tools: enabled automatically only in `local`
-- source file editing: disabled until explicitly enabled
-
-## Local MCP Startup
-
-The package is designed to start with local stdio MCP first.
-
-The generated local handle is `app`, so the underlying launch command is:
+The default local command is:
 
 ```bash
 php artisan mcp:start app
 ```
 
-Normally your MCP client launches that for you. You only need to run it yourself when smoke-testing the server manually.
-
-## Local Verification
-
-After installation, these are the fastest sanity checks:
-
-```bash
-php artisan mcp:start app
-```
+Your MCP client will usually run that for you. Running it manually is the quickest smoke test.
 
 You should also confirm that:
 
@@ -90,13 +80,13 @@ You should also confirm that:
 - `routes/ai.php` exists
 - `docs/project-conventions.md` exists
 
-If you later enable HTTP transport, then this becomes a useful extra check:
+If you later enable HTTP mode, this is also useful:
 
 ```bash
 php artisan route:list --path=mcp
 ```
 
-## Optional Web Transport
+## 5. Optional: Enable HTTP Mode
 
 HTTP transport is opt-in.
 
@@ -107,7 +97,7 @@ To expose a protected MCP endpoint:
 3. Keep `laravel-mcp.server.auth.mode` as `shared_token`
 4. Reload your Laravel app so the route configuration is picked up
 
-The generated endpoint is:
+Default endpoint:
 
 ```text
 /mcp/app
@@ -123,7 +113,7 @@ Requests must send either:
 - `Authorization: Bearer <token>`
 - the configured shared token header, default: `X-MCP-Token`
 
-## Optional Passport OAuth Mode
+## 6. Optional: Enable Passport OAuth
 
 If you want OAuth metadata routes for desktop clients:
 
@@ -134,7 +124,7 @@ If you want OAuth metadata routes for desktop clients:
 
 The suite only registers OAuth metadata routes when Passport is installed and the auth mode is set to `passport_oauth`.
 
-## Optional Source File Editing
+## 7. Understand File Editing
 
 The suite includes generic file tools:
 
@@ -143,7 +133,9 @@ The suite includes generic file tools:
 - `laravel-files-patch`
 - `laravel-files-write`
 
-Read and list operations work immediately inside approved paths. Patch and write operations stay denied until you explicitly opt in:
+Read and list work immediately inside approved paths.
+
+Patch and write also work immediately in `local` because the default config includes:
 
 ```php
 'file_tools' => [
@@ -151,7 +143,9 @@ Read and list operations work immediately inside approved paths. Patch and write
 ],
 ```
 
-Even after opt-in, writes are still restricted to approved paths such as:
+Those write operations are still denied outside write-enabled environments. You can also turn them off in `local` by setting `allow_code_edits` to `false`.
+
+When writes are allowed, they are still restricted to approved paths such as:
 
 - `app/`
 - `routes/`
@@ -161,7 +155,7 @@ Even after opt-in, writes are still restricted to approved paths such as:
 
 ## Troubleshooting
 
-If `php artisan mcp:install` is not available:
+If `php artisan mcp:install` is missing:
 
 - run `composer dump-autoload`
 - confirm the package is installed in `composer.json`
@@ -178,3 +172,10 @@ If HTTP transport does not appear:
 - verify `enable_web_server` is `true`
 - clear cached config and routes if your app caches them
 - verify the request is targeting `/mcp/app`
+
+If file writes are denied unexpectedly:
+
+- verify the app environment is `local`
+- verify `write_tools.enabled_in_local` is `true`
+- verify `file_tools.allow_code_edits` is `true`
+- verify the target path is inside an approved writable root

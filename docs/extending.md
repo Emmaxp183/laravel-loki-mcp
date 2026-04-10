@@ -25,7 +25,7 @@ Useful overrides include:
 - change HTTP middleware for the web transport
 - switch between `shared_token`, custom middleware, and `passport_oauth`
 - change approved and blocked file-edit paths
-- enable source-file editing
+- enable or disable source-file editing
 
 Example:
 
