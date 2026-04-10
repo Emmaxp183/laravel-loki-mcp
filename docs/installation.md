@@ -12,7 +12,7 @@ This guide shows the shortest path to a working Laravel MCP server.
 ## 1. Install The Package
 
 ```bash
-composer require emmanuelmensah/laravel-mcp-suite
+composer require immaxp/laravel-mcp-suite
 php artisan mcp:install
 ```
 

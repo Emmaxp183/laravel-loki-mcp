@@ -1,5 +1,5 @@
 {
-  "name": "emmanuelmensah/laravel-mcp-suite",
+  "name": "immaxp/laravel-mcp-suite",
   "description": "Firebase-style MCP capability suite for Laravel applications.",
   "type": "library",
   "license": "MIT",

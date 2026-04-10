@@ -16,7 +16,7 @@ GitHub repository: [Emmaxp183/laravel-loki-mcp](https://github.com/Emmaxp183/lar
 ## Quick Start
 
 ```bash
-composer require emmanuelmensah/laravel-mcp-suite
+composer require immaxp/laravel-mcp-suite
 php artisan mcp:install
 ```
 

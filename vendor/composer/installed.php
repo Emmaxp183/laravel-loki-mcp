@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'emmanuelmensah/laravel-mcp-suite',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'name' => 'immaxp/laravel-mcp-suite',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '131afaeb8329ed444619001096f88a1bace12da1',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -91,15 +91,6 @@
             'reference' => 'd42c8731f0624ad6bdc8d3e5e9a4524f68801cfa',
             'type' => 'library',
             'install_path' => __DIR__ . '/../egulias/email-validator',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'emmanuelmensah/laravel-mcp-suite' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -399,6 +390,15 @@
             'replaced' => array(
                 0 => 'v13.3.0',
             ),
+        ),
+        'immaxp/laravel-mcp-suite' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '131afaeb8329ed444619001096f88a1bace12da1',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
