@@ -15,6 +15,16 @@ GitHub repository: [Emmaxp183/laravel-loki-mcp](https://github.com/Emmaxp183/lar
 
 ## Quick Start
 
+Until the first tagged release is published, install the package from GitHub:
+
+```bash
+composer config repositories.laravel-mcp-suite vcs https://github.com/Emmaxp183/laravel-loki-mcp.git
+composer require immaxp/laravel-mcp-suite:dev-main
+php artisan mcp:install
+```
+
+After the first tagged release is published, this will work instead:
+
 ```bash
 composer require immaxp/laravel-mcp-suite
 php artisan mcp:install

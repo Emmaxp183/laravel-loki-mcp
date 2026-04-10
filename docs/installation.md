@@ -11,6 +11,16 @@ This guide shows the shortest path to a working Laravel MCP server.
 
 ## 1. Install The Package
 
+Until the first tagged release is published, install the package from GitHub:
+
+```bash
+composer config repositories.laravel-mcp-suite vcs https://github.com/Emmaxp183/laravel-loki-mcp.git
+composer require immaxp/laravel-mcp-suite:dev-main
+php artisan mcp:install
+```
+
+After the first tagged release is published, this simpler command will work:
+
 ```bash
 composer require immaxp/laravel-mcp-suite
 php artisan mcp:install
@@ -160,6 +170,11 @@ If `php artisan mcp:install` is missing:
 - run `composer dump-autoload`
 - confirm the package is installed in `composer.json`
 - confirm Laravel package discovery is enabled
+
+If Composer cannot find `immaxp/laravel-mcp-suite`:
+
+- make sure you added the GitHub VCS repository entry first
+- use `composer require immaxp/laravel-mcp-suite:dev-main` until the first tagged release exists
 
 If your client cannot connect locally:
 
