@@ -12,17 +12,10 @@ After you run:
 php artisan mcp:install
 ```
 
-add this server entry to your Codex CLI MCP configuration:
+register the server with Codex CLI:
 
-```json
-{
-  "mcpServers": {
-    "laravel-app": {
-      "command": "php",
-      "args": ["artisan", "mcp:start", "app"]
-    }
-  }
-}
+```bash
+codex mcp add laravel-app php artisan mcp:start app
 ```
 
 This assumes:

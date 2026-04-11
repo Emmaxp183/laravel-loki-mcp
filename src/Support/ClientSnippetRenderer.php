@@ -8,14 +8,7 @@ class ClientSnippetRenderer
     {
         return <<<'TEXT'
 Codex CLI
-{
-  "mcpServers": {
-    "laravel-app": {
-      "command": "php",
-      "args": ["artisan", "mcp:start", "app"]
-    }
-  }
-}
+codex mcp add laravel-app php artisan mcp:start app
 TEXT;
     }
 

@@ -39,7 +39,7 @@ return [
         ],
     ],
     'file_tools' => [
-        'allow_code_edits' => false,
+        'allow_code_edits' => true,
         'writable_paths' => [
             'app',
             'routes',
