@@ -12,17 +12,10 @@ After you run:
 php artisan mcp:install
 ```
 
-use this server entry in your Claude Code MCP configuration:
+register the server with Claude Code:
 
-```json
-{
-  "mcpServers": {
-    "laravel-app": {
-      "command": "php",
-      "args": ["artisan", "mcp:start", "app"]
-    }
-  }
-}
+```bash
+claude mcp add laravel-app -- php artisan mcp:start app
 ```
 
 This assumes:

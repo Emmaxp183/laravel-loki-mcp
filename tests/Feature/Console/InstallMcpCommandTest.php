@@ -25,6 +25,10 @@ class InstallMcpCommandTest extends TestCase
             'codex mcp add laravel-app php artisan mcp:start app',
             $this->app->make(ClientSnippetRenderer::class)->codexCli()
         );
+        $this->assertStringContainsString(
+            'claude mcp add laravel-app -- php artisan mcp:start app',
+            $this->app->make(ClientSnippetRenderer::class)->claudeCode()
+        );
         $this->assertFileExists(base_path('config/laravel-mcp.php'));
         $this->assertFileExists(base_path('config/mcp.php'));
         $this->assertFileExists(base_path('routes/ai.php'));

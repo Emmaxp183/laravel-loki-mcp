@@ -16,14 +16,7 @@ TEXT;
     {
         return <<<'TEXT'
 Claude Code
-{
-  "mcpServers": {
-    "laravel-app": {
-      "command": "php",
-      "args": ["artisan", "mcp:start", "app"]
-    }
-  }
-}
+claude mcp add laravel-app -- php artisan mcp:start app
 TEXT;
     }
 
