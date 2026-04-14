@@ -66,6 +66,7 @@ abstract class TestCase extends Orchestra
     {
         $app['config']->set('app.env', 'local');
         $app['config']->set('app.debug', true);
+        $app['config']->set('laravel-mcp.modules.queues', true);
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [
             'driver' => 'sqlite',

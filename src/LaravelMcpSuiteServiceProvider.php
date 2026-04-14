@@ -3,6 +3,7 @@
 namespace LaravelMcpSuite;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Queue\Factory as QueueFactory;
 use LaravelMcpSuite\Console\Commands\InstallMcpCommand;
 use LaravelMcpSuite\Capabilities\Artisan\ArtisanCapabilities;
 use LaravelMcpSuite\Capabilities\Core\CoreCapabilities;
@@ -22,6 +23,8 @@ use LaravelMcpSuite\Support\DatabaseMutator;
 use LaravelMcpSuite\Support\FileDiffPreview;
 use LaravelMcpSuite\Support\FileEditPolicy;
 use LaravelMcpSuite\Support\FileEditor;
+use LaravelMcpSuite\Support\QueueFailedJobInspector;
+use LaravelMcpSuite\Support\QueueFailedJobOperator;
 use LaravelMcpSuite\Capabilities\Queues\QueuesCapabilities;
 use LaravelMcpSuite\Support\StorageAccessPolicy;
 use LaravelMcpSuite\Support\StorageEditor;
@@ -58,6 +61,15 @@ class LaravelMcpSuiteServiceProvider extends ServiceProvider
         });
         $this->app->singleton(FileDiffPreview::class, FileDiffPreview::class);
         $this->app->bind(FileEditor::class, FileEditor::class);
+        $this->app->bind(QueueFailedJobInspector::class, function ($app): QueueFailedJobInspector {
+            return new QueueFailedJobInspector($app->make('queue.failer'));
+        });
+        $this->app->bind(QueueFailedJobOperator::class, function ($app): QueueFailedJobOperator {
+            return new QueueFailedJobOperator(
+                $app->make('queue.failer'),
+                $app->make(QueueFactory::class),
+            );
+        });
         $this->app->bind(StorageEditor::class, StorageEditor::class);
 
         $this->app->singleton(CoreCapabilities::class, CoreCapabilities::class);

@@ -49,4 +49,13 @@ class EnvironmentPolicy
 
         return (bool) ($this->config['database_tools']['allow_mutations_elsewhere'] ?? false);
     }
+
+    public function queueMutationsEnabled(string $environment): bool
+    {
+        if ($environment === 'local') {
+            return (bool) ($this->config['queue_tools']['allow_mutations_in_local'] ?? false);
+        }
+
+        return (bool) ($this->config['queue_tools']['allow_mutations_elsewhere'] ?? false);
+    }
 }

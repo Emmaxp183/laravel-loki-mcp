@@ -11,6 +11,7 @@ GitHub repository: [Emmaxp183/laravel-loki-mcp](https://github.com/Emmaxp183/lar
 - Laravel tools for app info, routes, models, schema, record mutations, logs, config, tests, and safe Artisan commands
 - File tools for listing, reading, patching, and writing approved project files
 - Storage tools for listing, reading, writing, and deleting allowlisted Laravel storage objects
+- Queue tools for listing, retrying, and deleting failed Laravel queue jobs
 - Generator tools for scaffolding Laravel CRUD APIs and web CRUD flows
 - Resources for routes, models, schema, recent errors, and project conventions
 - Prompt helpers for debugging, CRUD scaffolding, feature tests, and route/controller review
@@ -152,6 +153,29 @@ The package exposes two generator tools:
 - `laravel-crud-web-generate`
 
 Both tools stay behind the normal local-only code edit guard. The API generator writes model, migration, requests, API resource, API controller, API route registration, and a feature test. The web generator writes model, migration, requests, web controller, Blade views, web route registration, and a feature test.
+
+## Failed Queue Jobs
+
+The package exposes these failed-queue tools:
+
+- `laravel-queue-failed-list`
+- `laravel-queue-failed-retry`
+- `laravel-queue-failed-delete`
+
+The list tool is read-only. Retry and delete stay behind a dedicated queue mutation gate:
+
+```php
+'modules' => [
+    'queues' => true,
+],
+
+'queue_tools' => [
+    'allow_mutations_in_local' => true,
+    'allow_mutations_elsewhere' => false,
+],
+```
+
+By default, retry and delete only run in `local`. Both mutation tools work on one failed job id at a time.
 
 ## Documentation
 

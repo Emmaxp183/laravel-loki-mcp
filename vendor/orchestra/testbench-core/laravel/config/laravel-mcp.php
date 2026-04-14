@@ -21,8 +21,9 @@ return [
         'database' => true,
         'files' => true,
         'logs' => true,
+        'storage' => true,
         'tests' => true,
-        'queues' => false,
+        'queues' => true,
         'generators' => true,
     ],
     'write_tools' => [
@@ -48,6 +49,7 @@ return [
             'database',
             'config',
             'tests',
+            'resources',
         ],
         'blocked_paths' => [
             '.env',
@@ -56,6 +58,26 @@ return [
             'bootstrap/cache',
             'node_modules',
         ],
+    ],
+    'database_tools' => [
+        'allow_mutations_in_local' => true,
+        'allow_mutations_elsewhere' => false,
+        'allowed_tables' => [],
+        'allowed_keys' => ['id'],
+        'max_rows_per_call' => 1,
+    ],
+    'storage_tools' => [
+        'allow_writes_in_local' => true,
+        'allow_writes_elsewhere' => false,
+        'allowed_disks' => ['local'],
+        'allowed_prefixes' => [
+            'local' => ['mcp/'],
+        ],
+        'max_bytes' => 262144,
+    ],
+    'queue_tools' => [
+        'allow_mutations_in_local' => true,
+        'allow_mutations_elsewhere' => false,
     ],
     'redaction' => [
         'enabled' => true,

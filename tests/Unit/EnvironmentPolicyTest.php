@@ -36,4 +36,17 @@ class EnvironmentPolicyTest extends TestCase
         $this->assertFalse($policy->writeToolsEnabled('staging'));
         $this->assertFalse($policy->writeToolsEnabled('production'));
     }
+
+    public function test_queue_mutations_have_dedicated_environment_gates(): void
+    {
+        $policy = new EnvironmentPolicy([
+            'queue_tools' => [
+                'allow_mutations_in_local' => true,
+                'allow_mutations_elsewhere' => false,
+            ],
+        ]);
+
+        $this->assertTrue($policy->queueMutationsEnabled('local'));
+        $this->assertFalse($policy->queueMutationsEnabled('production'));
+    }
 }

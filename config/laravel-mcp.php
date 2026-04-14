@@ -23,7 +23,7 @@ return [
         'logs' => true,
         'storage' => true,
         'tests' => true,
-        'queues' => false,
+        'queues' => true,
         'generators' => true,
     ],
     'write_tools' => [
@@ -74,6 +74,10 @@ return [
             'local' => ['mcp/'],
         ],
         'max_bytes' => 262144,
+    ],
+    'queue_tools' => [
+        'allow_mutations_in_local' => true,
+        'allow_mutations_elsewhere' => false,
     ],
     'redaction' => [
         'enabled' => true,
