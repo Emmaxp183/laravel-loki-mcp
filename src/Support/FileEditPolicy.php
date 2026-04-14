@@ -52,7 +52,7 @@ class FileEditPolicy
      */
     protected function writablePaths(): array
     {
-        $paths = $this->config['file_tools']['writable_paths'] ?? ['app', 'routes', 'database', 'config', 'tests'];
+        $paths = $this->config['file_tools']['writable_paths'] ?? ['app', 'routes', 'database', 'config', 'tests', 'resources'];
 
         return array_values(array_filter(array_map(
             fn (mixed $path): string => $this->normalize((string) $path),

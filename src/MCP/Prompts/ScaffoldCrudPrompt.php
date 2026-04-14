@@ -16,7 +16,7 @@ class ScaffoldCrudPrompt extends Prompt
     {
         return Response::make(
             Response::text(
-                'Inspect laravel://app/routes, laravel://app/models, and laravel://docs/project-conventions before using any generator or write-capable capability to scaffold CRUD.'
+                'Inspect laravel://app/routes, laravel://app/models, and laravel://docs/project-conventions before using laravel-crud-api-generate for JSON APIs or laravel-crud-web-generate for controllers and Blade views.'
             )->asAssistant()
         );
     }

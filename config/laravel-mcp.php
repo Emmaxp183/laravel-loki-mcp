@@ -49,6 +49,7 @@ return [
             'database',
             'config',
             'tests',
+            'resources',
         ],
         'blocked_paths' => [
             '.env',
@@ -57,6 +58,13 @@ return [
             'bootstrap/cache',
             'node_modules',
         ],
+    ],
+    'database_tools' => [
+        'allow_mutations_in_local' => true,
+        'allow_mutations_elsewhere' => false,
+        'allowed_tables' => [],
+        'allowed_keys' => ['id'],
+        'max_rows_per_call' => 1,
     ],
     'storage_tools' => [
         'allow_writes_in_local' => true,

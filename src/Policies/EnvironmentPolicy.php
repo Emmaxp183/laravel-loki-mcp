@@ -40,4 +40,13 @@ class EnvironmentPolicy
 
         return (bool) ($this->config['storage_tools']['allow_writes_elsewhere'] ?? false);
     }
+
+    public function databaseMutationsEnabled(string $environment): bool
+    {
+        if ($environment === 'local') {
+            return (bool) ($this->config['database_tools']['allow_mutations_in_local'] ?? false);
+        }
+
+        return (bool) ($this->config['database_tools']['allow_mutations_elsewhere'] ?? false);
+    }
 }

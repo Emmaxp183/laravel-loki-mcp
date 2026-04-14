@@ -36,7 +36,8 @@ class CorePromptsTest extends TestCase
 
         $this->assertTrue(strpos($text, 'laravel://app/routes') < strpos($text, 'laravel://app/models'));
         $this->assertTrue(strpos($text, 'laravel://app/models') < strpos($text, 'laravel://docs/project-conventions'));
-        $this->assertTrue(strpos($text, 'laravel://docs/project-conventions') < strpos($text, 'generator'));
+        $this->assertTrue(strpos($text, 'laravel://docs/project-conventions') < strpos($text, 'laravel-crud-api-generate'));
+        $this->assertTrue(strpos($text, 'laravel-crud-api-generate') < strpos($text, 'laravel-crud-web-generate'));
     }
 
     public function test_generate_feature_test_prompt_references_context_then_conventions_then_tests(): void

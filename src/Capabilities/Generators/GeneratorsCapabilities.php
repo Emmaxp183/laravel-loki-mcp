@@ -2,11 +2,17 @@
 
 namespace LaravelMcpSuite\Capabilities\Generators;
 
+use LaravelMcpSuite\MCP\Tools\LaravelCrudApiGenerateTool;
+use LaravelMcpSuite\MCP\Tools\LaravelCrudWebGenerateTool;
+
 class GeneratorsCapabilities
 {
     public function tools(): array
     {
-        return [];
+        return [
+            LaravelCrudApiGenerateTool::class,
+            LaravelCrudWebGenerateTool::class,
+        ];
     }
 
     public function resources(): array

@@ -15,6 +15,10 @@ use LaravelMcpSuite\Capabilities\Storage\StorageCapabilities;
 use LaravelMcpSuite\Policies\EnvironmentPolicy;
 use LaravelMcpSuite\Support\AiRouteRegistrar;
 use LaravelMcpSuite\Support\CapabilityRegistry;
+use LaravelMcpSuite\Support\CrudGenerator;
+use LaravelMcpSuite\Support\CrudRouteWriter;
+use LaravelMcpSuite\Support\DatabaseMutationPolicy;
+use LaravelMcpSuite\Support\DatabaseMutator;
 use LaravelMcpSuite\Support\FileDiffPreview;
 use LaravelMcpSuite\Support\FileEditPolicy;
 use LaravelMcpSuite\Support\FileEditor;
@@ -37,9 +41,15 @@ class LaravelMcpSuiteServiceProvider extends ServiceProvider
         $this->app->bind(EnvironmentPolicy::class, function ($app): EnvironmentPolicy {
             return new EnvironmentPolicy($app['config']->get('laravel-mcp', []));
         });
+        $this->app->bind(DatabaseMutationPolicy::class, function ($app): DatabaseMutationPolicy {
+            return new DatabaseMutationPolicy($app['config']->get('laravel-mcp', []));
+        });
+        $this->app->bind(DatabaseMutator::class, DatabaseMutator::class);
 
         $this->app->singleton(AiRouteRegistrar::class, AiRouteRegistrar::class);
         $this->app->singleton(CapabilityRegistry::class, CapabilityRegistry::class);
+        $this->app->bind(CrudGenerator::class, CrudGenerator::class);
+        $this->app->bind(CrudRouteWriter::class, CrudRouteWriter::class);
         $this->app->bind(FileEditPolicy::class, function ($app): FileEditPolicy {
             return new FileEditPolicy($app['config']->get('laravel-mcp', []));
         });

@@ -3,7 +3,10 @@
 namespace LaravelMcpSuite\Capabilities\Database;
 
 use LaravelMcpSuite\MCP\Resources\SchemaResource;
+use LaravelMcpSuite\MCP\Tools\LaravelDbRecordCreateTool;
+use LaravelMcpSuite\MCP\Tools\LaravelDbRecordDeleteTool;
 use LaravelMcpSuite\MCP\Tools\LaravelDbSchemaReadTool;
+use LaravelMcpSuite\MCP\Tools\LaravelDbRecordUpdateTool;
 
 class DatabaseCapabilities
 {
@@ -11,6 +14,9 @@ class DatabaseCapabilities
     {
         return [
             LaravelDbSchemaReadTool::class,
+            LaravelDbRecordCreateTool::class,
+            LaravelDbRecordUpdateTool::class,
+            LaravelDbRecordDeleteTool::class,
         ];
     }
 

@@ -8,9 +8,10 @@ GitHub repository: [Emmaxp183/laravel-loki-mcp](https://github.com/Emmaxp183/lar
 
 ## What You Get
 
-- Laravel tools for app info, routes, models, schema, logs, config, tests, and safe Artisan commands
+- Laravel tools for app info, routes, models, schema, record mutations, logs, config, tests, and safe Artisan commands
 - File tools for listing, reading, patching, and writing approved project files
 - Storage tools for listing, reading, writing, and deleting allowlisted Laravel storage objects
+- Generator tools for scaffolding Laravel CRUD APIs and web CRUD flows
 - Resources for routes, models, schema, recent errors, and project conventions
 - Prompt helpers for debugging, CRUD scaffolding, feature tests, and route/controller review
 
@@ -118,6 +119,39 @@ Default storage config:
 ```
 
 By default, MCP storage access is limited to the `local` disk under the `mcp/` prefix. Writes and deletes remain local-only unless you explicitly open them up in config.
+
+## Database Record Mutations
+
+The package also exposes these database mutation tools:
+
+- `laravel-db-record-create`
+- `laravel-db-record-update`
+- `laravel-db-record-delete`
+
+These operate directly on allowlisted tables through the query builder. They do not run raw SQL and they do not dispatch Eloquent model events.
+
+Default database mutation config:
+
+```php
+'database_tools' => [
+    'allow_mutations_in_local' => true,
+    'allow_mutations_elsewhere' => false,
+    'allowed_tables' => [],
+    'allowed_keys' => ['id'],
+    'max_rows_per_call' => 1,
+],
+```
+
+By default, database mutation requests are denied until you explicitly allow tables in `allowed_tables`. Updates and deletes are also limited to allowlisted key columns.
+
+## CRUD Generators
+
+The package exposes two generator tools:
+
+- `laravel-crud-api-generate`
+- `laravel-crud-web-generate`
+
+Both tools stay behind the normal local-only code edit guard. The API generator writes model, migration, requests, API resource, API controller, API route registration, and a feature test. The web generator writes model, migration, requests, web controller, Blade views, web route registration, and a feature test.
 
 ## Documentation
 

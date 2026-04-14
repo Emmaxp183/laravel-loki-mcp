@@ -14,7 +14,12 @@ class CapabilityRegistryTest extends TestCase
         $registry = $this->app->make(CapabilityRegistry::class);
 
         $this->assertContains(\LaravelMcpSuite\MCP\Tools\LaravelAppInfoTool::class, $registry->tools());
+        $this->assertContains(\LaravelMcpSuite\MCP\Tools\LaravelDbRecordCreateTool::class, $registry->tools());
+        $this->assertContains(\LaravelMcpSuite\MCP\Tools\LaravelDbRecordUpdateTool::class, $registry->tools());
+        $this->assertContains(\LaravelMcpSuite\MCP\Tools\LaravelDbRecordDeleteTool::class, $registry->tools());
         $this->assertContains(\LaravelMcpSuite\MCP\Tools\LaravelStorageListTool::class, $registry->tools());
+        $this->assertContains(\LaravelMcpSuite\MCP\Tools\LaravelCrudApiGenerateTool::class, $registry->tools());
+        $this->assertContains(\LaravelMcpSuite\MCP\Tools\LaravelCrudWebGenerateTool::class, $registry->tools());
         $this->assertContains(\LaravelMcpSuite\MCP\Resources\RoutesResource::class, $registry->resources());
         $this->assertContains(\LaravelMcpSuite\MCP\Prompts\DebugLastExceptionPrompt::class, $registry->prompts());
     }
