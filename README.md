@@ -10,6 +10,7 @@ GitHub repository: [Emmaxp183/laravel-loki-mcp](https://github.com/Emmaxp183/lar
 
 - Laravel tools for app info, routes, models, schema, logs, config, tests, and safe Artisan commands
 - File tools for listing, reading, patching, and writing approved project files
+- Storage tools for listing, reading, writing, and deleting allowlisted Laravel storage objects
 - Resources for routes, models, schema, recent errors, and project conventions
 - Prompt helpers for debugging, CRUD scaffolding, feature tests, and route/controller review
 
@@ -86,6 +87,37 @@ In the current default config, patch and write are enabled in `local` because:
 Outside `local`, or if you set that flag to `false`, write requests are denied.
 
 Even when writes are allowed, they are still limited to approved directories such as `app/`, `routes/`, `database/`, `config/`, and `tests/`.
+
+## Laravel Storage Access
+
+The package also exposes these storage tools:
+
+- `laravel-storage-list`
+- `laravel-storage-read`
+- `laravel-storage-write`
+- `laravel-storage-delete`
+
+These operate on Laravel storage disks, not source files. They stay separate from the source-file editor so runtime storage access can be allowlisted independently.
+
+Default storage config:
+
+```php
+'modules' => [
+    'storage' => true,
+],
+
+'storage_tools' => [
+    'allow_writes_in_local' => true,
+    'allow_writes_elsewhere' => false,
+    'allowed_disks' => ['local'],
+    'allowed_prefixes' => [
+        'local' => ['mcp/'],
+    ],
+    'max_bytes' => 262144,
+],
+```
+
+By default, MCP storage access is limited to the `local` disk under the `mcp/` prefix. Writes and deletes remain local-only unless you explicitly open them up in config.
 
 ## Documentation
 

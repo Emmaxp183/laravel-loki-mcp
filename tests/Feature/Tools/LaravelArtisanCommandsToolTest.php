@@ -9,6 +9,14 @@ use LaravelMcpSuite\Tests\TestCase;
 
 class LaravelArtisanCommandsToolTest extends TestCase
 {
+    public function test_default_policy_allows_db_seed_and_tinker(): void
+    {
+        $policy = $this->app->make(ArtisanCommandPolicy::class);
+
+        $this->assertTrue($policy->allowed('db:seed'));
+        $this->assertTrue($policy->allowed('tinker'));
+    }
+
     public function test_it_lists_commands_and_marks_allowlisted_entries(): void
     {
         $tool = $this->app->make(LaravelArtisanCommandsTool::class);

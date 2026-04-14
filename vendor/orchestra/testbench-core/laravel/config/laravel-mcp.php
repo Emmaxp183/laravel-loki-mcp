@@ -34,8 +34,10 @@ return [
             'about',
             'route:list',
             'test',
+            'db:seed',
             'migrate:status',
             'queue:failed',
+            'tinker',
         ],
     ],
     'file_tools' => [

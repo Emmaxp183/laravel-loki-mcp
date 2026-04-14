@@ -21,6 +21,7 @@ return [
         'database' => true,
         'files' => true,
         'logs' => true,
+        'storage' => true,
         'tests' => true,
         'queues' => false,
         'generators' => true,
@@ -34,8 +35,10 @@ return [
             'about',
             'route:list',
             'test',
+            'db:seed',
             'migrate:status',
             'queue:failed',
+            'tinker',
         ],
     ],
     'file_tools' => [
@@ -54,6 +57,15 @@ return [
             'bootstrap/cache',
             'node_modules',
         ],
+    ],
+    'storage_tools' => [
+        'allow_writes_in_local' => true,
+        'allow_writes_elsewhere' => false,
+        'allowed_disks' => ['local'],
+        'allowed_prefixes' => [
+            'local' => ['mcp/'],
+        ],
+        'max_bytes' => 262144,
     ],
     'redaction' => [
         'enabled' => true,

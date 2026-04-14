@@ -46,6 +46,8 @@ return [
             'about',
             'route:list',
             'test',
+            'db:seed',
+            'tinker',
         ],
     ],
     'file_tools' => [

@@ -31,4 +31,13 @@ class EnvironmentPolicy
         return $this->writeToolsEnabled($environment)
             && (bool) ($this->config['file_tools']['allow_code_edits'] ?? false);
     }
+
+    public function storageWritesEnabled(string $environment): bool
+    {
+        if ($environment === 'local') {
+            return (bool) ($this->config['storage_tools']['allow_writes_in_local'] ?? false);
+        }
+
+        return (bool) ($this->config['storage_tools']['allow_writes_elsewhere'] ?? false);
+    }
 }

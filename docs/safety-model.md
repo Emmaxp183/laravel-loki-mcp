@@ -74,8 +74,10 @@ The safe command runner only allows commands in:
         'about',
         'route:list',
         'test',
+        'db:seed',
         'migrate:status',
         'queue:failed',
+        'tinker',
     ],
 ],
 ```

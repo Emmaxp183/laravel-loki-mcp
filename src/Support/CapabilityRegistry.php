@@ -10,6 +10,7 @@ use LaravelMcpSuite\Capabilities\Files\FilesCapabilities;
 use LaravelMcpSuite\Capabilities\Generators\GeneratorsCapabilities;
 use LaravelMcpSuite\Capabilities\Logs\LogsCapabilities;
 use LaravelMcpSuite\Capabilities\Queues\QueuesCapabilities;
+use LaravelMcpSuite\Capabilities\Storage\StorageCapabilities;
 use LaravelMcpSuite\Capabilities\Tests\TestsCapabilities;
 
 class CapabilityRegistry
@@ -54,6 +55,7 @@ class CapabilityRegistry
             'database' => DatabaseCapabilities::class,
             'files' => FilesCapabilities::class,
             'logs' => LogsCapabilities::class,
+            'storage' => StorageCapabilities::class,
             'tests' => TestsCapabilities::class,
             'queues' => QueuesCapabilities::class,
             'generators' => GeneratorsCapabilities::class,

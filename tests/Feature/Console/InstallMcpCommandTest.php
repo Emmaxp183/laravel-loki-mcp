@@ -33,6 +33,8 @@ class InstallMcpCommandTest extends TestCase
         $this->assertFileExists(base_path('config/mcp.php'));
         $this->assertFileExists(base_path('routes/ai.php'));
         $this->assertFileExists(base_path('docs/project-conventions.md'));
+        $this->assertStringContainsString("'db:seed'", (string) file_get_contents(base_path('config/laravel-mcp.php')));
+        $this->assertStringContainsString("'tinker'", (string) file_get_contents(base_path('config/laravel-mcp.php')));
         $this->assertStringContainsString('AiRouteRegistrar', (string) file_get_contents(base_path('routes/ai.php')));
     }
 }
